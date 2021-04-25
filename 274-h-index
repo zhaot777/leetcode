@@ -1,0 +1,13 @@
+class Solution {
+    public int hIndex(int[] citations) {
+        // create array by index
+        int max_index = 1000;
+        int[] indexes = new int[max_index+1];
+        for (int i = 0; i < citations.length; i++) indexes[citations[i]]++;
+        for (int j = max_index; j >= 0; j--) {
+            if (j != max_index) indexes[j] += indexes[j+1];
+            if (j <= indexes[j]) return j;
+        }
+        return -1;
+    }
+}

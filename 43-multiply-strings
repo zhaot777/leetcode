@@ -1,0 +1,36 @@
+class Solution {
+    private String stringReverse(String str) {
+        String res = "";
+        for (int i = 0; i < str.length(); i++) 
+            res = str.charAt(i) + res;
+        return res;
+    }
+    public String multiply(String num1, String num2) {
+        // edge case result 0
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        // reverse inputs
+        String n1 = stringReverse(num1);
+        String n2 = stringReverse(num2);
+        // calculate the i+j position in the list
+        int[] list = new int[n1.length() + n2.length()];
+        for (int i = 0; i < n1.length(); i++) {
+            for (int j = 0; j < n2.length(); j++) {
+                int c = (n1.charAt(i) - '0') * (n2.charAt(j) - '0');
+                list[i + j] += c % 10;
+                list[i + j + 1] += c /10;
+            }
+        }
+        // post calculate
+        String res = "";
+        int x = 0;
+        for (int p = 0; p < list.length; p++) {
+            res = (char)((list[p] + x) % 10 + '0') + res;
+            x = (list[p] + x) / 10;
+        }
+        if (x > 0) res = (char)(x+'0')+res;
+        // remove prefix 0
+        int q = 0;
+        while(res.charAt(q) == '0' && q < res.length()) q++;
+        return res.substring(q);
+    }
+}
