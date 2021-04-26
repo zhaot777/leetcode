@@ -1,0 +1,18 @@
+class Solution {
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for(int num: nums) sum += num;
+        int target = sum/2;
+        if (target*2 != sum) return false;
+        // Change to problem to: whether there's subset that sum of them equal to target
+        boolean[][] dp = new boolean[nums.length+1][target+1];
+        for (int i = 0; i <= nums.length; i++) {
+            for (int j = 0; j <= target; j++) {
+                if (j == 0) dp[i][j] = true;
+                else if (i == 0) dp[i][j] = false;
+                else dp[i][j] = dp[i-1][j] || ((j < nums[i-1])? false : dp[i-1][j-nums[i-1]]);
+            }
+        }
+        return dp[nums.length][target];
+    }
+}

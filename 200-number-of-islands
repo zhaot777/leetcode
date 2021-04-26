@@ -1,0 +1,24 @@
+class Solution {
+    private void dps(int[][]m, char[][]grid, int i, int j) {
+        if (i < 0 || j < 0 || i == grid.length || j == grid[0].length || grid[i][j] == '0') return;
+        m[i][j] = 1;
+        if (i < grid.length-1 && m[i+1][j] == 0) dps(m, grid, i+1, j);
+        if (i > 0 && m[i-1][j] == 0) dps(m, grid, i-1, j);
+        if (j < grid[0].length-1 && m[i][j+1] == 0) dps(m, grid, i, j+1);
+        if (j > 0 && m[i][j-1] == 0) dps(m, grid, i, j-1);
+        
+    }
+    public int numIslands(char[][] grid) {
+        int[][]m = new int[grid.length][grid[0].length];
+        int res = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1' && m[i][j] == 0) {
+                    dps(m, grid, i, j);
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+}

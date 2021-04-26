@@ -1,0 +1,53 @@
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+// idea0: brute force
+// idea1: LinkedHashSet (https://leetcode.com/problems/lru-cache/discuss/1174727/Java-LinkedHashSet-%2B-HashMap-Very-Simple)
+// idea2: Double linked list (https://www.youtube.com/watch?v=7ABFKPK2hD4)
+class LRUCache {
+    
+    private Map<Integer, Integer> map;
+    private int[] list;
+    private int c;
+    private int max;
+    private int op;
+
+    public LRUCache(int capacity) {
+        map = new HashMap<Integer, Integer>();
+        list = new int[3001];
+        c = 0;
+        op = 10;
+        max = capacity;
+    }
+    
+    public int get(int key) {
+        if (map.containsKey(key)) {
+            list[key] = ++op;
+            return map.get(key);
+        } 
+        else return -1;
+    }
+    
+    public void put(int key, int value) {
+        list[key] = ++op;
+        if (!map.containsKey(key)) {
+            if (c < max) c++;
+            else {
+                int rmkey = -1;
+                int rmvalue = 30001;
+                for(int i = 0; i < 3001; i++) {
+                    if (list[i] != 0 && list[i] < rmvalue) {
+                        rmkey = i;
+                        rmvalue = list[i];
+                    }
+                }
+                map.remove(rmkey);
+                list[rmkey] = 0;
+            }
+        }
+        map.put(key, value);
+    }
+}

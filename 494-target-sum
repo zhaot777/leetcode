@@ -1,0 +1,11 @@
+class Solution {
+    private int dfs(int [] nums, int target, int op, int i) {
+        if (i == nums.length) return (op == target) ? 1 : 0;
+        int l = dfs(nums, target, op + nums[i], i+1);
+        int r = dfs(nums, target, op - nums[i], i+1);
+        return l+r;
+    }
+    public int findTargetSumWays(int[] nums, int target) {
+        return dfs(nums, target, 0, 0);
+    }
+}
