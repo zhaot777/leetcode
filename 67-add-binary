@@ -1,0 +1,17 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        String res = "";
+        int x = 0;
+        int y = 0;
+        int i = a.length()-1;
+        int j = b.length()-1;
+        for (;i >= 0 || j >= 0 || y > 0; i--, j--) {
+            int an = (i >= 0) ? (a.charAt(i) - '0') : 0;
+            int bn = (j >= 0) ? (b.charAt(j) - '0') : 0;
+            x = (an + bn + y) % 2;
+            y = (an + bn + y) / 2;
+            res = (char)(x + '0') + res;
+        }
+        return res;
+    }
+}

@@ -1,0 +1,17 @@
+class Solution {
+    public String countAndSay(int n) {
+        if (n == 1) return "1";
+        String m = countAndSay(n-1);
+        String res = "";
+        int count = 1;
+        for (int i = 0; i < m.length(); i++) {
+            if (i+1 < m.length() && m.charAt(i) == m.charAt(i+1))
+                count++;
+            else {
+                res = res + (char)(count+'0') + m.charAt(i);
+                count = 1;
+            }
+        }
+        return res;
+    }
+}
